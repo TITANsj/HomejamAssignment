@@ -12,7 +12,18 @@ const classSchema = new mongoose.schema({
         required: true,
         minLength: 3
     },
-    instructor: ObjectId
+    students:[
+        {
+            studentId:{
+                type: ObjectId,
+                ref: "Students",
+            }
+        }
+    ],
+    instructor:{
+        type: ObjectId,
+        ref: "Instructors",
+    }
 });
 
 module.exports = mongoose.model("Classes", classSchema);

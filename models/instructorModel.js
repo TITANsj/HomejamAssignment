@@ -23,14 +23,6 @@ const instructorSchema = new mongoose.Schema({
                 ref: "Classes",
             }
         }
-    ],
-    students:[
-        {
-            studentId:{
-                type: ObjectId,
-                ref: "Students",
-            }
-        }
     ]
 });
 
