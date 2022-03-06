@@ -27,8 +27,8 @@ exports.instructorSignup = async (req, res) => {
         else{
             const instructor = await new Instructor({name, email, paswword});
             const salt = await bcrypt.genSalt();
-            company.paswword = await bcrypt.hash(password, salt);
-            await company.save();
+            instructor.password = await bcrypt.hash(password, salt);
+            await instructor.save();
             return res.status(201).json({ message: "success", token, instructor });
         }
     } catch (err){
