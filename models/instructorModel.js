@@ -11,6 +11,11 @@ const instructorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        required: true,
+        minLength: 5,
+    },
     classes:[
         {
             classId:{
@@ -28,3 +33,5 @@ const instructorSchema = new mongoose.Schema({
         }
     ]
 });
+
+module.exports = mongoose.model("Instructors", instructorSchema);

@@ -14,3 +14,5 @@ const classSchema = new mongoose.schema({
     },
     instructor: ObjectId
 });
+
+module.exports = mongoose.model("Classes", classSchema);
