@@ -26,4 +26,16 @@ const studentSchema = mongoose.Schema({
     ]
 });
 
+studentSchema.statics.login = async function (email, password) {
+    const student = await this.findOne({email : email});
+    if(student){
+      const auth = await bcrypt.compare(password, student.password);
+      if(auth){
+          return student;
+      }
+      throw Error("Email and password dosenot match");
+    }
+    throw Error("Invalid user credentials");
+};
+
 module.exports = mongoose.model("Students", studentSchema);

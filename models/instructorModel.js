@@ -34,4 +34,16 @@ const instructorSchema = new mongoose.Schema({
     ]
 });
 
+instructorSchema.statics.login = async function (email, password) {
+    const instructor = await this.findOne({email : email});
+    if(instructor){
+      const auth = await bcrypt.compare(password, instructor.password);
+      if(auth){
+          return instructor;
+      }
+      throw Error("Email and password dosenot match");
+    }
+    throw Error("Invalid user credentials");
+};
+
 module.exports = mongoose.model("Instructors", instructorSchema);
