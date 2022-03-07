@@ -18,10 +18,8 @@ const studentSchema = mongoose.Schema({
     },
     registeredClass:[
         {
-            classId:{
-                type: ObjectId,
-                ref: "Classes"
-            }
+            type: ObjectId,
+            ref: "Classes"
         }
     ]
 });

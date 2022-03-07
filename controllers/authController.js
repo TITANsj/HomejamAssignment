@@ -1,6 +1,7 @@
 const Student = require("../models/studentModel.js");
-const Instrutor = require("../models/instructorModel.js");
+const Instructor = require("../models/instructorModel.js");
 const jwt = require("jsonwebtoken");
+const AppError = require("../utilities/appError.js");
 
 // use this middleware to protect routes
 exports.requireSignin = async (req, res, next) => {
@@ -30,9 +31,9 @@ exports.requireSignin = async (req, res, next) => {
 exports.whoIsRequesting = async (req, res, next) => {
   try{
     const id = req.headers.id;
-    const student = await Student.findById(id);
-    if (student) {
-      req.profile = student;
+    const instructor = await Instructor.findById(id);
+    if (instructor) {
+      req.profile = instructor;
       next();
     } else {
       return next(

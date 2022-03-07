@@ -18,10 +18,8 @@ const instructorSchema = new mongoose.Schema({
     },
     classes:[
         {
-            classId:{
-                type: ObjectId,
-                ref: "Classes",
-            }
+            type: ObjectId,
+            ref: "Classes",
         }
     ]
 });

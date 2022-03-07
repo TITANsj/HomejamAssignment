@@ -9,6 +9,7 @@ const {
 const {
     instructorLogin,
     instructorSignup,
+    createClass
 } = require("../controllers/instructorController");
 
 // const {
@@ -18,5 +19,7 @@ const {
 router.post("/instructor/signup", instructorSignup);
 
 router.post("/instructor/login", instructorLogin);
+
+router.post("/instructor/create", requireSignin, whoIsRequesting, createClass);
 
 module.exports = router;

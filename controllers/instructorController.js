@@ -1,8 +1,10 @@
 const Instructor = require("../models/instructorModel.js");
+const Class = require("../models/classModel.js");
 const AppError = require("../utilities/appError.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { createToken } = require("../utilities/createToken.js");
+const { findById } = require("../models/instructorModel.js");
 
 const validateEmail = (email) => {
     return String(email)
@@ -26,6 +28,7 @@ exports.instructorSignup = async (req, res, next) => {
         }
         else{
             const instructor = await new Instructor({name, email, password});
+            const token = createToken(instructor._id);
             const salt = await bcrypt.genSalt();
             instructor.password = await bcrypt.hash(password, salt);
             await instructor.save();
@@ -48,7 +51,24 @@ exports.instructorLogin = async (req, res, next) => {
         const instructor = await Instructor.login(email, password);
         const token = createToken(instructor._id);
         return res.status(200).json({ message: "success", token, instructor });
-    } catch(err){
-      return next(new AppError(400, err.message));
+    } catch (err){
+        return next(new AppError(400, err.message));
     }
-  };
+};
+
+exports.createClass = async (req, res, next) => {
+  try{
+    let {className, classCode} = req.body;
+    if(!classCode || !className)
+      return res.status(400).json({ Error: "Please enter all fields" });
+    const instructorId = req.profile._id;
+    const class1 = await new Class({ className, classCode, instructorId });
+    const instructor = await Instructor.findById(instructorId); 
+    instructor.classes.push(class1);
+    await class1.save();
+    await instructor.save();
+    return res.status(201).json({ message: "success", class1 });
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};

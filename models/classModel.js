@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema;
 
-const classSchema = new mongoose.schema({
+const classSchema = new mongoose.Schema({
     className:{
         type: String,
         required: true,
@@ -10,17 +10,16 @@ const classSchema = new mongoose.schema({
     classCode:{
         type: String,
         required: true,
-        minLength: 3
+        minLength: 3,
+        unique: true
     },
     students:[
         {
-            studentId:{
-                type: ObjectId,
-                ref: "Students",
-            }
+            type: ObjectId,
+            ref: "Students",
         }
     ],
-    instructor:{
+    instructorId:{
         type: ObjectId,
         ref: "Instructors",
     }
