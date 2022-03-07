@@ -121,3 +121,32 @@ exports.deleteClass = async (req, res,next) => {
   }
 };
 
+exports.addStudent = async (req, res, next) => {
+  try{
+    const id = req.params.classId;
+    const class1 = await Class.findById(id).populate("students");
+    const student = await Student.findOne({ email: req.body.email });
+    await class1.students.push(student._id);
+    await student.registeredClass.push(id);
+    student.save();
+    class1.save();
+    res.status(201).json({ message: "Successfully Joined", class1 });
+  } catch (err){
+      return next(new AppError(400, err.message));
+  }
+}
+
+exports.removeStudent = async (req, res, next) => {
+  try{
+    const id = req.params.classId;
+    const class1 = await Class.findById(id).populate("students");
+    const student = await Student.findOne({ email: req.body.email });
+    await class1.students.pull({_id: student._id });
+    await student.registeredClass.pull({_id: student._id});
+    student.save();
+    class1.save();
+    res.status(201).json({ message: "Successfully Joined", class1 });
+  } catch (err){
+      return next(new AppError(400, err.message));
+  }
+}

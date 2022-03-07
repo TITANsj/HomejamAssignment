@@ -45,7 +45,9 @@ exports.whoIsRequesting = async (req, res, next) => {
   }
 };
 
-exports.IsStudentRequesting = async (req, res, next) => {
+
+//Middleware to see if student is requesting or not
+exports.isStudentRequesting = async (req, res, next) => {
   try{
     const id = req.headers.id;
     const student = await Student.findById(id);
