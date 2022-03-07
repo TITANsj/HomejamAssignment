@@ -55,14 +55,14 @@ exports.studentLogin = async (req, res, next) => {
     }
 };
 
-// exports.joinedClass = async (req, res, next) => {
-//   try{
-//     const class1 = await Class.find({ instructorId: req.profile._id });
-//     return res.status(201).json({ message: "success", class1 });
-//   } catch(err){
-//       return next(new AppError(400, err.message));
-//   }
-// };
+exports.joinedClass = async (req, res, next) => {
+  try{
+    const class1 = await Class.find({ students: req.profile._id });
+    return res.status(201).json({ message: "success", class1 });
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};
 
 exports.joinClass = async (req, res, next) => {
   try{

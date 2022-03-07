@@ -10,11 +10,13 @@ const {
     studentLogin,
     studentSignup,
     joinClass,
-    leaveClass
+    leaveClass,
+    joinedClass
 } = require("../controllers/studentController");
 
 router.post("/login", studentLogin);
 router.post("/signup", studentSignup);
+router.get("/class/joined", requireSignin, IsStudentRequesting, joinedClass);
 router.put("/class/join/:classId", requireSignin, IsStudentRequesting, joinClass);
 router.put("/class/leave/:classId", requireSignin, IsStudentRequesting, leaveClass);
 
