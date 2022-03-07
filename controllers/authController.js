@@ -44,3 +44,20 @@ exports.whoIsRequesting = async (req, res, next) => {
     return next(new AppError(400, err.message));
   }
 };
+
+exports.IsStudentRequesting = async (req, res, next) => {
+  try{
+    const id = req.headers.id;
+    const student = await Student.findById(id);
+    if (student) {
+      req.profile = student;
+      next();
+    } else {
+      return next(
+        new AppError(500, "Not authorized")
+      );
+    }
+  } catch (err) {
+    return next(new AppError(400, err.message));
+  }
+};

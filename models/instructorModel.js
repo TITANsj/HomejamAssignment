@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const { ObjectId } = mongoose.Schema;
 
 const instructorSchema = new mongoose.Schema({
@@ -20,6 +21,7 @@ const instructorSchema = new mongoose.Schema({
         {
             type: ObjectId,
             ref: "Classes",
+            unique: true
         }
     ]
 });

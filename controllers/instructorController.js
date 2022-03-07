@@ -4,7 +4,6 @@ const AppError = require("../utilities/appError.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { createToken } = require("../utilities/createToken.js");
-const { findById } = require("../models/instructorModel.js");
 
 const validateEmail = (email) => {
     return String(email)
@@ -72,3 +71,53 @@ exports.createClass = async (req, res, next) => {
       return next(new AppError(400, err.message));
   }
 };
+
+exports.instructorClass = async (req, res, next) => {
+  try{
+    const class1 = await Class.find({ instructorId: req.profile._id });
+    return res.status(201).json({ message: "success", class1 });
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};
+
+exports.getAllClass = async (req, res,next) => {
+  try{
+    const class1 = await Class.find();
+    return res.status(201).json({ message: "success", class1 });  
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};
+
+exports.getClass = async (req, res, next) => {
+  try{
+    const id = req.params.classId;
+    const class1 = await Class.findById(id);
+    return res.status(201).json({ message: "success", class1 });  
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};
+
+exports.updateClass = async (req, res,next) => {
+  try{
+    const id = req.params.classId;
+    const class1 = await Class.findById(id);
+    class1 = _.extend(class1, req.body);
+    return res.status(201).json({ message: "Successfully Updated", class1 });  
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};
+
+exports.deleteClass = async (req, res,next) => {
+  try{
+    const id = req.params.classId;
+    const class1 = await Class.deleteOne({ _id: id });;
+    return res.status(201).json({ message: "Successfully Deleted", class1 });  
+  } catch(err){
+      return next(new AppError(400, err.message));
+  }
+};
+

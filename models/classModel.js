@@ -17,6 +17,7 @@ const classSchema = new mongoose.Schema({
         {
             type: ObjectId,
             ref: "Students",
+            unique:true
         }
     ],
     instructorId:{
